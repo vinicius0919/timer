@@ -53,4 +53,16 @@ input:disabled {
   cursor: not-allowed;
 }
 
-
+@media screen and (max-width: 600px) {
+.timercontainer{
+  width: 100%;
+}
+input{
+  width:3rem;
+  height: 3rem;
+  font-size: 30px
+}
+button{
+  width: 6rem;
+}
+}
