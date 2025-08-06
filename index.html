@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>Site</title>
+  </head>
+
+  <body>
+    <div>
+      <div class="timercontainer">
+        <input
+          type="number"
+          value="0"
+          name="hours"
+          id="hoursfirst"
+          placeholder="Horas"
+          min="0"
+          max="9"
+        />
+        <input
+          type="number"
+          value="0"
+          name="hours"
+          id="hourssecond"
+          placeholder="Horas"
+          min="0"
+          max="9"
+        />
+        <span>:</span>
+        <input
+          type="number"
+          value="0"
+          name="minutes"
+          id="minutesfirst"
+          placeholder="Minutos"
+          min="0"
+          max="6"
+        />
+        <input
+          type="number"
+          value="0"
+          id="minutessecond"
+          name="minutes"
+          placeholder="Minutos"
+          min="0"
+          max="9"
+        />
+        <span>:</span>
+        <input
+          type="number"
+          value="0"
+          name="seconds"
+          id="secondsfirst"
+          placeholder="Segundos"
+          min="0"
+          max="6"
+        />
+        <input
+          type="number"
+          value="0"
+          name="seconds"
+          id="secondssecond"
+          placeholder="Segundos"
+          min="0"
+          max="9"
+        />
+      </div>
+    </div>
+    <div class="actions">
+      <button id="start">Iniciar</button>
+      <button id="stop">Parar</button>
+      <button id="reset">Reiniciar</button>
+    </div>
+    <script>
+      const enableInputs = () => {
+        hoursfirst.removeAttribute("disabled");
+        hourssecond.removeAttribute("disabled");
+        minutesfirst.removeAttribute("disabled");
+        minutessecond.removeAttribute("disabled");
+        secondsfirst.removeAttribute("disabled");
+        secondssecond.removeAttribute("disabled");
+      };
+      const disableInputs = () => {
+        hoursfirst.setAttribute("disabled", true);
+        hourssecond.setAttribute("disabled", true);
+        minutesfirst.setAttribute("disabled", true);
+        minutessecond.setAttribute("disabled", true);
+        secondsfirst.setAttribute("disabled", true);
+        secondssecond.setAttribute("disabled", true);
+      };
+
+      let hoursfirst = document.getElementById("hoursfirst");
+      let hourssecond = document.getElementById("hourssecond");
+      let minutesfirst = document.getElementById("minutesfirst");
+      let minutessecond = document.getElementById("minutessecond");
+      let secondsfirst = document.getElementById("secondsfirst");
+      let secondssecond = document.getElementById("secondssecond");
+
+      let startButton = document.getElementById("start");
+      let stopButton = document.getElementById("stop");
+      let resetButton = document.getElementById("reset");
+
+      let timerInterval;
+
+      startButton.addEventListener("click", () => {
+        let seconds = parseInt(secondsfirst.value + secondssecond.value);
+        disableInputs();
+
+        let totalSeconds =
+          parseInt(hoursfirst.value + hourssecond.value) * 3600 +
+          parseInt(minutesfirst.value + minutessecond.value) * 60 +
+          parseInt(secondsfirst.value + secondssecond.value);
+
+        timerInterval = setInterval(() => {
+          if (totalSeconds <= 0) {
+            clearInterval(timerInterval);
+            return;
+          }
+
+          totalSeconds--;
+          let hours = Math.floor(totalSeconds / 3600).toString();
+          let minutes = Math.floor((totalSeconds % 3600) / 60).toString();
+          let seconds = (totalSeconds % 60).toString();
+
+          hoursfirst.value = hours.length > 1 ? hours.slice(0, 1) : "0";
+          hourssecond.value = hours.length <= 1 ? hours : hours.slice(1);
+
+          minutesfirst.value = minutes.length > 1 ? minutes.slice(0, 1) : "0";
+          minutessecond.value =
+            minutes.length <= 1 ? minutes : minutes.slice(1);
+
+          secondsfirst.value = seconds.length > 1 ? seconds.slice(0, 1) : "0";
+          secondssecond.value =
+            seconds.length <= 1 ? seconds : seconds.slice(1);
+        }, 1000);
+      });
+
+      stopButton.addEventListener("click", () => {
+        clearInterval(timerInterval);
+        enableInputs();
+      });
+
+      resetButton.addEventListener("click", () => {
+        clearInterval(timerInterval);
+
+        enableInputs();
+        hoursfirst.value = 0;
+        minutesfirst.value = 0;
+        secondsfirst.value = 0;
+        hourssecond.value = 0;
+        minutessecond.value = 0;
+        secondssecond.value = 0;
+      });
+    </script>
+    <script src="./index.js"></script>
+  </body>
+</html>

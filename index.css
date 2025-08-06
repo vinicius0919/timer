@@ -1,0 +1,53 @@
+body {
+  background-color: rgb(12, 12, 12);
+  width: 100vw;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#timer {
+  text-align: center;
+  font-size: 10rem;
+}
+
+.timercontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+span {
+  font-size: 5rem;
+}
+
+input {
+  height: 5rem;
+  width: 5rem;
+  font-size: 5rem;
+  text-align: center;
+  border-radius: 25%;
+  padding: 0.1rem;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+button {
+  height: 2rem;
+  width: 10rem;
+  font-size: 1rem;
+  background-color: #4caf50;
+  border-radius: 1rem;
+}
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+input:disabled {
+  color: black;
+  cursor: not-allowed;
+}
