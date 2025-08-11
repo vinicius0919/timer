@@ -9,87 +9,70 @@
   </head>
 
   <body>
-      <div class="timercontainer">
-        <input
-          type="number"
-          value="0"
-          name="hours"
-          id="hoursfirst"
-          placeholder="Horas"
-          min="0"
-          max="9"
-        />
-        <input
-          type="number"
-          value="0"
-          name="hours"
-          id="hourssecond"
-          placeholder="Horas"
-          min="0"
-          max="9"
-        />
-        <span>:</span>
-        <input
-          type="number"
-          value="0"
-          name="minutes"
-          id="minutesfirst"
-          placeholder="Minutos"
-          min="0"
-          max="6"
-        />
-        <input
-          type="number"
-          value="0"
-          id="minutessecond"
-          name="minutes"
-          placeholder="Minutos"
-          min="0"
-          max="9"
-        />
-        <span>:</span>
-        <input
-          type="number"
-          value="0"
-          name="seconds"
-          id="secondsfirst"
-          placeholder="Segundos"
-          min="0"
-          max="6"
-        />
-        <input
-          type="number"
-          value="0"
-          name="seconds"
-          id="secondssecond"
-          placeholder="Segundos"
-          min="0"
-          max="9"
-        />
-      </div>
+    <div class="timercontainer">
+      <input
+        type="number"
+        value="0"
+        name="hours"
+        id="hoursfirst"
+        placeholder="Horas"
+        min="0"
+        max="9"
+      />
+      <input
+        type="number"
+        value="0"
+        name="hours"
+        id="hourssecond"
+        placeholder="Horas"
+        min="0"
+        max="9"
+      />
+      <span>:</span>
+      <input
+        type="number"
+        value="0"
+        name="minutes"
+        id="minutesfirst"
+        placeholder="Minutos"
+        min="0"
+        max="5"
+      />
+      <input
+        type="number"
+        value="0"
+        id="minutessecond"
+        name="minutes"
+        placeholder="Minutos"
+        min="0"
+        max="9"
+      />
+      <span>:</span>
+      <input
+        type="number"
+        value="0"
+        name="seconds"
+        id="secondsfirst"
+        placeholder="Segundos"
+        min="0"
+        max="5"
+      />
+      <input
+        type="number"
+        value="0"
+        name="seconds"
+        id="secondssecond"
+        placeholder="Segundos"
+        min="0"
+        max="9"
+      />
+    </div>
     <div class="actions">
       <button id="start">Iniciar</button>
       <button id="stop">Parar</button>
       <button id="reset">Reiniciar</button>
     </div>
     <script>
-      const enableInputs = () => {
-        hoursfirst.removeAttribute("disabled");
-        hourssecond.removeAttribute("disabled");
-        minutesfirst.removeAttribute("disabled");
-        minutessecond.removeAttribute("disabled");
-        secondsfirst.removeAttribute("disabled");
-        secondssecond.removeAttribute("disabled");
-      };
-      const disableInputs = () => {
-        hoursfirst.setAttribute("disabled", true);
-        hourssecond.setAttribute("disabled", true);
-        minutesfirst.setAttribute("disabled", true);
-        minutessecond.setAttribute("disabled", true);
-        secondsfirst.setAttribute("disabled", true);
-        secondssecond.setAttribute("disabled", true);
-      };
-
       let hoursfirst = document.getElementById("hoursfirst");
       let hourssecond = document.getElementById("hourssecond");
       let minutesfirst = document.getElementById("minutesfirst");
@@ -102,6 +85,34 @@
       let resetButton = document.getElementById("reset");
 
       let timerInterval;
+
+      const validateInputs = (e) => {
+        console.log(e.target.value);
+        console.log(e.target.max);
+        if (
+          parseInt(e.target.value) > parseInt(e.target.max) ||
+          parseInt(e.target.value) < parseInt(e.target.min)
+        ) {
+          e.target.value = 0;
+        }
+      };
+
+      const inputs = document.querySelectorAll("input[type=number]");
+
+      inputs.forEach((element) => {
+        element.addEventListener("change", validateInputs);
+      });
+
+      const enableInputs = () => {
+        inputs.forEach((element) => {
+          element.removeAttribute("disabled");
+        });
+      };
+      const disableInputs = () => {
+        inputs.forEach((element) => {
+          element.setAttribute("disabled", true);
+        });
+      };
 
       startButton.addEventListener("click", () => {
         let seconds = parseInt(secondsfirst.value + secondssecond.value);
@@ -145,12 +156,9 @@
         clearInterval(timerInterval);
 
         enableInputs();
-        hoursfirst.value = 0;
-        minutesfirst.value = 0;
-        secondsfirst.value = 0;
-        hourssecond.value = 0;
-        minutessecond.value = 0;
-        secondssecond.value = 0;
+        inputs.forEach((element) => {
+          element.value = 0;
+        });
       });
     </script>
     <script src="./index.js"></script>
